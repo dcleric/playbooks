@@ -1,0 +1,45 @@
+# Ansible cookbook for installing Zabbix agent on multiple Ubuntu releases - 8.04, 10.04, 12.04
+# Custom repository intended.
+# 31/03/2014
+
+- hosts: testservers
+  remote_user: pmolyavin
+  sudo: yes
+
+  tasks:
+     - name: "Enable repo for the zabbix-agent"
+#       shell: echo "deb http://zabbix.dc.farecompare.com/repo/deb {{ ansible_lsb.codename }} main">>/etc/apt/sources.list
+       shell: echo "deb http://zabbix.dc.farecompare.com/repo/deb {{ ansible_lsb.codename }} main">>/etc/apt/sources.list
+       when: ansible_os_family == "Debian"
+     - name: "Install zabbix-agent on Ubuntu 8.04/10.04"
+       apt: update_cache=yes pkg=zabbix-agent force=yes state=latest
+       when: ansible_lsb.codename == 'hardy' or ansible_lsb.codename == 'lucid'
+     - name: "Install zabbix-agent on Ubuntu 12.04"
+#       apt: update_cache=yes pkg=zabbix-agent=2.2.2-1+{{ ansible_lsb.codename }} force=yes state=installed
+       apt: update_cache=yes pkg=zabbix-agent force=yes state=latest
+       when: ansible_lsb.codename == 'precise'
+
+#       when: ansible_os_family == "Ubuntu"
+#     - name: "Install the config-file for the zabbix-agent"
+#       copy: src=/home/pmolyavin/zabbix_conf/zabbix_agentd.conf dest:/usr/local/etc/zabbix_agentd.conf owner=root group=root mode=644 backup=yes   
+#       when: ansible_lsb.codename == 'hardy' or ansible_lsb.codename == 'lucid'
+     - name: "Place a right init script for zabbix-agent (8.04/10.04)"
+       copy: 'src=/root/zabbix_conf/zabbix-agentd.init dest=/etc/init.d/zabbix-agentd owner=root group=root mode=744 backup=yes'
+       when: ansible_lsb.codename == 'hardy' or ansible_lsb.codename == 'lucid'
+     - name: "Group zabbix on Ubuntu (8.04/10.04)"
+       group: name=zabbix 
+       when: ansible_lsb.codename == 'hardy' or ansible_lsb.codename == 'lucid'
+
+     - name: "User zabbix on Ubuntu (8.04/10.04)"
+       user: name=zabbix group=zabbix 
+       when: ansible_lsb.codename == 'hardy' or ansible_lsb.codename == 'lucid'
+     - name: "Log file on Ubuntu (8.04/10.04)"
+       shell: touch /var/log/zabbix-agentd.log && chown zabbix.zabbix /var/log/zabbix-agentd.log
+       when: ansible_lsb.codename == 'hardy' or ansible_lsb.codename == 'lucid'
+
+     - name: "Enable and start zabbix-agent on Ubuntu (8.04/10.04)"
+       service: name=zabbix-agentd enabled=yes state=started
+       when: ansible_lsb.codename == 'hardy' or ansible_lsb.codename == 'lucid'
+     - name: "Enable and start zabbix-agent on Ubuntu (12.04)"
+       service: name=zabbix-agent enabled=yes state=started
+       when: ansible_lsb.codename == 'precise'
