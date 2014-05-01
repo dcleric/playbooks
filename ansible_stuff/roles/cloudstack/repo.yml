@@ -1,0 +1,6 @@
+- name: ""
+  shell: wget -O - http://cloudstack.apt-get.eu/release.asc|apt-key add -
+  name: "" 
+  shell: echo "deb http://cloudstack.apt-get.eu/ubuntu precise 4.2" >> /etc/apt/sources.list.d/cloudstack.list
+- name: ""
+   apt: cache_update=yes

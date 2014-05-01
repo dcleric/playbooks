@@ -1,0 +1,8 @@
+- name: ufw configuration
+    ufw: state=enabled policy=deny
+    ufw: rule=allow name=OpenSSH
+    ufw: rule=allow interface=eth1.101
+    ufw: rule=allow interface=eth1.102
+    ufw: rule=allow interface=eth1.103
+    ufw: rule=allow interface=eth1.104
+    ufw: rule=allow interface=eth0 direction=in to_port=22

@@ -1,0 +1,16 @@
+# Ansible playbook for the KVM installation
+     - name: Install qemu-kvm
+       apt: name=qemu-kvm state=installed
+       when: ansible_os_family == "Debian"
+     - name: Install libvirt-bin
+       apt: name=libvirt-bin state=installed
+       when: ansible_os_family == "Debian"
+     - name: Configuration of libvirt
+       shell: echo 'listen\_tls = 0 \
+                    listen\_tcp = 1 \
+                    tcp\_port = "16509" \
+                    auth\_tcp = "none" \
+                    mdns\_adv = 0' >>/etc/libvirt/libvirtd.conf
+
+     - name: Apparmor configuration
+       shell: ln -s /etc/apparmor.d/usr.sbin.libvirtd /etc/apparmor.d/disable/ && ln -s /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper /etc/apparmor.d/disable/ && apparmor_parser -R /etc/apparmor.d/usr.sbin.libvirtd && apparmor_parser -R /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper

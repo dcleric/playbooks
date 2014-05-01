@@ -1,0 +1,7 @@
+#
+- hosts: cloudstack
+  remote_user: administrator
+  sudo: yes
+  tasks:
+#      - include: roles/kvm/tasks/main.yml
+      - include: roles/common/tasks/ufw.yml

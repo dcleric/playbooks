@@ -1,0 +1,11 @@
+# Sample playbook for the Ansilbe 
+# 31/03/2014
+
+- hosts: testservers
+  remote_user: pmolyavin
+
+  tasks:
+     - name: "Install zabbix-agent on Ubuntu"
+       apt: update_cache=yes pkg=zabbix-agent state=installed 
+       service: name=zabbix-agent enabled=yes state=started 
+       when: ansible_os_family == "Ubuntu"
