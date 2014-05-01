@@ -6,11 +6,10 @@
        apt: name=libvirt-bin state=installed
        when: ansible_os_family == "Debian"
      - name: Configuration of libvirt
-       shell: echo 'listen\_tls = 0 \
-                    listen\_tcp = 1 \
-                    tcp\_port = "16509" \
-                    auth\_tcp = "none" \
-                    mdns\_adv = 0' >>/etc/libvirt/libvirtd.conf
-
+       copy: src=/home/pavlik/repos/playbooks/ansible_stuff/roles/kvm/libvirtd.conf dest=/etc/libvirt/libvirtd.conf owner=root group=root mode=644 backup=yes
+	 - name: Configuration of libvirt defaults
+	   copy: src=/home/pavlik/repos/playbooks/ansible_stuff/roles/kvm/libvirt-bin dest=/etc/defaults/libvirt-bin owner=root group=root mode=644 backup=yes
      - name: Apparmor configuration
        shell: ln -s /etc/apparmor.d/usr.sbin.libvirtd /etc/apparmor.d/disable/ && ln -s /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper /etc/apparmor.d/disable/ && apparmor_parser -R /etc/apparmor.d/usr.sbin.libvirtd && apparmor_parser -R /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper
+     - name: Restart libvirtd daemon
+	   service: name=libvirtd-bin state=restarted

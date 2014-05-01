@@ -1,0 +1,4 @@
+    - name: Install VLAN software
+	   apt: name=vlan state=installed
+	- name: Add kernel module
+	 shell: echo '8021q' >> /etc/modules

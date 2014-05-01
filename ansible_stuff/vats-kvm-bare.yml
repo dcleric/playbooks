@@ -1,0 +1,8 @@
+- hosts: cloudstack
+  remote_user: administrator
+  sudo: yes
+  tasks:
+       - include: roles/common/tasks/vlan.yml
+       - include: roles/common/tasks/bridge.yml
+	   - include: roles/common/tasks/ntp.yml
+	   - include: roles/kvm/tasks/main.yml
