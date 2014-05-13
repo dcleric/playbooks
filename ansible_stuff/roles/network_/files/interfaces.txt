@@ -1,0 +1,22 @@
+auto lo
+iface lo inet loopback
+
+auto eth0
+auto eth0.101
+iface eth0.101 inet manual
+	vlan-raw-device eth0
+auto eth0.102 inet manual
+	vlan-raw-device eth0
+	
+auto eth1
+auto eth1.103
+iface eth1.103 inet manual
+	vlan-raw-device eth1
+auto eth1.104
+	iface eth1.104 inet manual
+	vlan-raw-device eth1
+auto eth1.105
+	iface eth1.105 inet manual
+	vlan-raw-device eth1
+
+source /etc/network/interfaces.d/*.cfg

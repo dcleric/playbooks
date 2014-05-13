@@ -1,0 +1,12 @@
+# Ceph-deploy for the Ubuntu
+- name: install ceph-deploy tool
+  apt: update_cache=yes name=ceph-deploy force=yes state=installed
+  when: ansible_os_family == "Debian"
+- name: create group user for ceph
+  group: name=ceph state=present
+- name: create user ceph
+  user: name=ceph state=present createhome=yes group=ceph groups=sudo password={{ passwd }}
+- name: switch switch-on passwordless sudo
+  shell: echo "ceph ALL = (root) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/ceph
+- name: fix permissions on /etc/sudoers.d/ceph
+  shell: chmod 0440 /etc/sudoers.d/ceph

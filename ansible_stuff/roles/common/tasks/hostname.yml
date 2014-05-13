@@ -1,0 +1,5 @@
+# Set hostname from variable
+- name: "Set hostname"
+  hostname: name={{ host_name }} 
+- name: set hostname in file
+  shell: echo {{ host_name }} > /etc/hostname

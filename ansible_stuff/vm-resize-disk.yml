@@ -1,0 +1,8 @@
+ - hosts: vms
+   remote_user: superadmin
+   sudo: yes
+   vars:
+    disk: /dev/vdb
+    vg_name: VolGroup
+   tasks:
+       - include: roles/common/diskfill.yml

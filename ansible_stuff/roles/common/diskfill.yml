@@ -1,0 +1,32 @@
+- name: "Create partition table"
+  shell: parted -s {{ disk }}   mklabel msdos
+- name: "Register cylinder count"
+  shell: parted {{ disk }} unit cyl print | sed -n 's/.*: \([0-9]*\)cyl/\1/p'
+  register: cylinder_count
+- name: "Create partition"
+  shell: parted -a optimal {{ disk }} mkpart primary 8e 0cyl {{ cylinder_count }}cyl
+- name: "Set partition type" 
+  shell: parted {{ disk }} set 1 lvm on
+- name: "Sync /proc/partitions"
+  shell: partprobe > /dev/null 2>&1
+- name: "Extend Volume group"
+  shell: vgextend {{ vg_name }} {{ disk }}1
+- name: "RAM size"
+  shell: free -m | grep Mem: | cut -b 15- | cut -b -5
+  register: ram
+- name: "Calculate swap size"
+  shell: expr {{ ram }} \* 3 / 2
+  register: swap_size
+- name: "Extend LV swap"
+  shell: lvextend {{ vg_name }}/lv_swap -L {{ swap_size }}M
+- name: "Swap off"
+  shell: swapoff -a
+- name: "Creating new swap" 
+  shell: mkswap /dev/{{ vg_name }}/lv_swap
+- name: "Enable swap"
+  shell: swapon -a
+- name: 'Extend root volume'
+  shell: lvextend -l +100%FREE {{ vg_name }}/lv_root
+- name: "Online resize"
+  shell: resize2fs {{ vg_name }}/lv_root
+

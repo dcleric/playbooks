@@ -1,0 +1,10 @@
+# System independent paasmaker installation prepare
+- name: create paasmaker group
+  group: name=paasmaker state=present
+- name: create user paasmaker
+  user: name=paasmaker state=present group=paasmaker createhome=yes groups=sudo password={{ passwd }}
+  
+- name: check-out paasmaker-repo
+  shell: cd /home/paasmaker && git clone https://bitbucket.org/paasmaker/paasmaker.git
+- name: make checkouted files usable by paasmaker
+  shell: chown -R paasmaker.paasmaker /home/paasmaker/*

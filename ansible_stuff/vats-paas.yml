@@ -1,0 +1,24 @@
+# Paasmaker pre-deploy preparation
+# 
+ - hosts: paasmaker
+   remote_user: administrator
+   sudo: yes
+   vars:
+    remote_user: administrator
+    passwd: $6$rounds=100000$6D/SjtH.w87AQCBW$1O7L9rtLn2b/maZ.HaybUPY75..UtNnAKbGMjVYLCfXVGorr1RYKk95uY.8esiTWKLmTG58WM51MFljM/4Jwk1
+   tasks:
+      #- include: roles/common/tasks/nameserver.yml
+      #- include: roles/kvm/tasks/main.yml
+      #- include: roles/cloudstack/repo.yml
+      #- include: roles/common/tasks/bridge.yml
+      - include: roles/common/tasks/ntp.yml
+      - include: roles/common/tasks/git.yml
+      #- include: roles/common/tasks/vlan.yml
+      - include: roles/common/tasks/upgrade.yml
+      #- include: roles/custom/passwd.yml
+      #- include: roles/common/network-prepare.yml
+      #- include: roles/common/tasks/hostname.yml
+      # include: roles/cloudstack/agent.yml
+      #- include: roles/common/tasks/reboot.yml
+      - include: roles/common/tasks/iptables-custom.yml
+      - include: roles/common/tasks/paasmaker.yml

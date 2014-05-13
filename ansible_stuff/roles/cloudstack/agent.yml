@@ -1,7 +1,8 @@
-- name: "Install cloudstack agent Debian"
-   apt: name=cloudstack-agent state=installed
-  when: ansible_os_family == "Debian"
-- name: "Install cloudstack agent CentOS"
+---
+ - name: "Install cloudstack agent Debian"
+   apt: name=cloudstack-agent state=installed force=yes
+   when: ansible_os_family == "Debian"
+ - name: "Install cloudstack agent CentOS"
    yum: name=cloudstack-agent state=installed
-  when: ansible_os_family == "RedHat"
+   when: ansible_os_family == "RedHat"
 

@@ -1,7 +1,7 @@
--name: Installation of ntp
+ - name: Installation of ntp
    apt: name=ntp state=installed
    when: ansible_os_family == "Debian"
--name: Installation of ntp Centos
+ - name: Installation of ntp Centos
    yum: name=ntp state=installed
    when: ansible_os_family == "RedHat"
 

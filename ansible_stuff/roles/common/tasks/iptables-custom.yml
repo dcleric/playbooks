@@ -1,0 +1,14 @@
+# Old-school iptables firewall enable from template.
+- name: Install iptables-persistent package if needed
+  apt: update_cache=yes name=iptables-persistent state=installed
+  when: ansible_os_family == "Debian"
+- name: Copy firewall template for Debian family
+  copy: src=/home/pavlik/repos/playbooks/ansible_stuff/firewall-single.v4 dest=/etc/iptables/rules.v4
+  when: ansible_os_family == "Debian"
+- name: Copy firewall template for Redhat family
+  copy: src=/home/pavlik/repos/playbooks/ansible_stuff/firewall-single.v4 dest=/etc/sysconfig/iptables
+  when: ansible_os_family == "RedHat"
+- name: Enable firewall service for RedHat family
+  service: name=iptables enabled=yes
+  when: ansible_os_family == "RedHat"
+

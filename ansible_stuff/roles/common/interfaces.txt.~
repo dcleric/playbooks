@@ -1,0 +1,51 @@
+auto lo
+iface lo inet loopback
+
+auto eth0
+auto eth0.101
+iface eth0.101 inet manual
+	vlan-raw-device eth0
+auto eth0.102
+iface eth0.102 inet manual
+	vlan-raw-device eth0
+	
+auto eth1
+auto eth1.103
+iface eth1.103 inet manual
+	vlan-raw-device eth1
+auto eth1.104
+iface eth1.104 inet manual
+	vlan-raw-device eth1
+auto eth1.105
+iface eth1.105 inet manual
+	vlan-raw-device eth1
+auto cloudvirbr101
+iface cloudvirbr101 inet static
+        address 10.80.101.X
+        network 10.80.101.0
+        netmask 255.255.255.0
+        broadcast  10.80.101.255
+        gateway  10.80.101.1
+        bridge_ports eth0.101
+        bridge_stp off
+        bridge_fd 0
+        bridge_maxwait 0
+iface cloudvirbr102 inet static
+        address 10.80.102.X
+        network 10.80.102.0
+        netmask 255.255.255.0
+        broadcast  10.80.102.255
+        bridge_ports eth0.102
+        bridge_stp off
+        bridge_fd 0
+        bridge_maxwait 0
+iface cloudvirbr103 inet manual
+        bridge_ports eth1.103
+        bridge_stp off
+        bridge_fd 0
+        bridge_maxwait 0
+iface cloudvirbr104 inet manual
+        bridge_ports eth1.104
+        bridge_stp off
+        bridge_fd 0
+        bridge_maxwait 0

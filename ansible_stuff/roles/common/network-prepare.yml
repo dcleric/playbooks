@@ -1,0 +1,15 @@
+# Dirty hacking file for boring network configuration
+ - name: "Check if there is either eth or em interfaces"
+   shell: ifconfig | grep Ethernet | cut -b-2 | head -n1
+   register: iface_result
+ - name: "Copy network configruation file for em"
+   copy: src=/home/pavlik/repos/playbooks/ansible_stuff/roles/common/interfaces.txt.XX dest=/home/{{ remote_user }}/interfaces.initial owner=root group=root mode=644 backup=yes
+   #when: iface_result  = et
+# - name: "Copy network configruation file for eth"
+#   copy: src=/home/pavlik/repos/playbooks/ansible_stuff/roles/common/interfaces.txt.em dest=/home/{{ remote_user }}/interfaces.initial owner=root group=root mode=644 backup=yes
+#   when:  iface_result  = em
+
+ - name: "Hack file"
+   shell: sed -e 's/X/{{ number }}/g' /home/{{ remote_user }}/interfaces.initial > /etc/network/interfaces
+ - name: "add self to hosts file"
+   shell: echo '10.80.101.{{ number }} {{ host_name }}' >> /etc/hosts

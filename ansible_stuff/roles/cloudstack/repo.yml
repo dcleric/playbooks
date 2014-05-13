@@ -3,4 +3,4 @@
   name: "" 
   shell: echo "deb http://cloudstack.apt-get.eu/ubuntu precise 4.2" >> /etc/apt/sources.list.d/cloudstack.list
 - name: ""
-   apt: cache_update=yes
+  apt: update_cache=yes

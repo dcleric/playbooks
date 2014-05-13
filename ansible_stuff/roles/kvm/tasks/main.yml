@@ -7,9 +7,11 @@
        when: ansible_os_family == "Debian"
      - name: Configuration of libvirt
        copy: src=/home/pavlik/repos/playbooks/ansible_stuff/roles/kvm/libvirtd.conf dest=/etc/libvirt/libvirtd.conf owner=root group=root mode=644 backup=yes
-	 - name: Configuration of libvirt defaults
-	   copy: src=/home/pavlik/repos/playbooks/ansible_stuff/roles/kvm/libvirt-bin dest=/etc/defaults/libvirt-bin owner=root group=root mode=644 backup=yes
+     - name: Configuration of libvirt defaults
+       copy: src=/home/pavlik/repos/playbooks/ansible_stuff/roles/kvm/libvirt-bin dest=/etc/default/libvirt-bin owner=root group=root mode=644 backup=yes
+     - name: Qemu vnc listen 0.0.0.0
+       lineinfile: dest=/etc/libvirt/qemu.conf regexp="^vnc_listen" insertafter="#vnc_listen" line="vnc_listen = \"0.0.0.0\""
      - name: Apparmor configuration
        shell: ln -s /etc/apparmor.d/usr.sbin.libvirtd /etc/apparmor.d/disable/ && ln -s /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper /etc/apparmor.d/disable/ && apparmor_parser -R /etc/apparmor.d/usr.sbin.libvirtd && apparmor_parser -R /etc/apparmor.d/usr.lib.libvirt.virt-aa-helper
      - name: Restart libvirtd daemon
-	   service: name=libvirtd-bin state=restarted
+       service: name=libvirt-bin state=restarted

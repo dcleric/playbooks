@@ -1,0 +1,2 @@
+ - name: enable root account with password
+   user: name=root password=$6$rounds=100000$6D/SjtH.w87AQCBW$1O7L9rtLn2b/maZ.HaybUPY75..UtNnAKbGMjVYLCfXVGorr1RYKk95uY.8esiTWKLmTG58WM51MFljM/4Jwk1

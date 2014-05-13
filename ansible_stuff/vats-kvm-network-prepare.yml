@@ -1,0 +1,6 @@
+ - hosts: kvm
+   remote_user: pmolyavin
+   sudo: yes
+   tasks:
+      - include: roles/common/network-prepare.yml
+

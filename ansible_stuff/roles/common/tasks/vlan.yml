@@ -1,4 +1,7 @@
-    - name: Install VLAN software
-	   apt: name=vlan state=installed
-	- name: Add kernel module
-	 shell: echo '8021q' >> /etc/modules
+# Installation of the vlan package and adding vlan kernel module for Debian family 
+ - name: Install vlan package 
+   apt: name=vlan state=installed
+   when: ansible_os_family == "Debian"
+ - name: Add kernel module for vlan support
+   shell: echo '8021q' >> /etc/modules
+   when: ansible_os_family == "Debian"

@@ -1,0 +1,39 @@
+- hosts: kvm
+  sudo: yes
+  remote_user: pmolyavin
+  roles:
+    - role: network
+      network_bridge_interfaces:
+       - device: cloudvirbr101
+         type: bridge
+         address: 10.80.101.5
+         netmask: 255.255.255.0
+         gateway: 10.80.101.1
+         dns-nameservers: 10.80.101.1, 8.8.8.8 
+         bootproto: static
+         stp: "off"
+         ports: [eth0.101]
+       - device: cloudvirbr102
+         type: bridge
+         address: 10.80.102.5
+         netmask: 255.255.255.0
+         gateway: 10.80.102.1
+         bootproto: static
+         stp: "off"
+         ports: [eth0.102]
+       - device: cloudvirbr103
+         type: bridge
+         address: 10.80.103.5
+         netmask: 255.255.255.0
+         gateway: 10.80.103.1
+         bootproto: static
+         stp: "off"
+         ports: [eth1.103]
+       - device: cloudvirbr104
+         type: bridge
+         stp: "off"
+         ports: [eth1.104]
+         device: cloudvirbr105
+         type: bridge
+         stp: "off"
+         ports: [eth1.105]
