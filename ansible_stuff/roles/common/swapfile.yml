@@ -1,0 +1,15 @@
+- name: "Calculate swap size"
+  shell: expr {{ ansible_memtotal_mb }} * 3 / 2
+  register: swap_size
+- name: "Swap off"
+  shell: swapoff -a
+#- name: "Creating new swap"
+#  shell: mkdir /var/swap
+- name: "Creating new swap"
+  shell: dd if=/dev/zero of=/var/swap/swapfile bs=1M count={{ swap_size.stdout }} 
+- name: "add to fstab"
+  shell: echo '/var/swap/swapfile swap swap defaults 0 0' >>/etc/fstab
+- name: " Make swap"
+  shell: mkswap /var/swap/swapfile
+- name: "enable sswap"
+  shell: swapon /var/swap/swapfile
