@@ -1,0 +1,4 @@
+- name: "Remove old time zone"
+  shell: rm -rf /etc/localtime
+- name: "Link new time zone"
+  shell: ln -s /usr/share/zoneinfo/{{ time_zone }} /etc/localtime

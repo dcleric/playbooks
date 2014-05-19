@@ -1,0 +1,4 @@
+- name: "Enable passwordless sudo for wheel members"
+  lineinfile: "dest=/etc/sudoers state=present regexp='^%wheel' line='%wheel ALL=(ALL) NOPASSWD: ALL'"
+- name: "Add user to wheel"
+  user: name={{ user }} groups={{ user }},wheel state=present

@@ -1,0 +1,11 @@
+ - hosts: test
+   remote_user: superadmin
+  # remote_user: pmolyavin
+   sudo: yes
+   vars:
+    user: superadmin
+    ssh_key: 'ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAy+lQTfCbxXWsutieNTTHlfbN40Exljh8e79UDKpBE8MJNELNTxjtsJhXRutudorckjySwQe5FM+wf2LhfUFGIRTXnR+8G7qKkTOYxD9UbPSrBJpxT2nWqQadMBKwD0VT4a7vYwNiIcbvjB1O8VGhZimZf9nQz/8vUhYW7Dx9Lixy0UnQc46ktRNmfGx+6Gfua5aIxtIfWBf8hTt1D5wDA04Qjk7Gy0Xc+HXTmAV/jO31+krdw0Pev8ev7Jd2smf7MpXYmDmaHEXLYGNAKa3XDCCCqrzUbrprEYwAjYZJBM/QqSRPNUEtjV/VvgBw8zkkvaqmClAffLvkKtLK2RcXrQ== superadmin@ADMIN'
+   tasks:
+       - include: roles/common/ssh-key.yml
+       - include: roles/common/sudo.yml
+

@@ -1,0 +1,4 @@
+- name: "Insert necessary line to a rsyslog.conf"
+  lineinfile: dest=/etc/rsyslog.conf line='$template GRAYLOGRFC5424,"<%pri%>%protocol-version% %timestamp:::date-rfc3339% %HOSTNAME% %app-name% %procid% %msg%\n"'
+- name: "Insert line 2 ton rsyslogd.conf"
+  lineinfile: dest=/etc/rsyslog.conf line='*.* @@{{ rsyslog_host }}:{{ rsyslog_port }};GRAYLOGRFC5424'

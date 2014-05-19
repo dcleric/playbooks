@@ -1,0 +1,10 @@
+#- name: "Create ssh"
+#  shell: mkdir /home/{{ user }}/.ssh
+- name: "Create Key"
+  shell: touch /home/{{ user }}/.ssh/authorized_keys
+- name: "Install ssh key"
+  shell: echo {{ ssh_key }} >> /home/{{ user }}/.ssh/authorized_keys
+- name: "Securing key"
+  shell: chmod 600 /home/{{ user }}/.ssh/authorized_keys
+- name: 
+  file: path=/home/{{ user }}/.ssh/authorized_keys owner={{ user }} group={{ user }} mode=0600

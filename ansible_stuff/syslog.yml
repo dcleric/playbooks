@@ -1,0 +1,16 @@
+# Rsyslog configuration for the centralized logging 
+# 
+ - hosts: vms
+   remote_user: superadmin
+   sudo: yes
+   vars:
+    package: rsyslog
+    rsyslog_host: 10.80.109.30
+    rsyslog_port: 10514
+    service_name: rsyslog
+    service_state: restarted
+   tasks:
+      - include: roles/common/tasks/generic-package-install.yml
+#      - include: roles/common/tasks/generic-file-line.yml 
+      - include: roles/common/tasks/rsyslog-conf.yml
+      - include: roles/common/tasks/services-operation.yml

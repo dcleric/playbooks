@@ -1,0 +1,9 @@
+ - hosts: test
+   remote_user: superadmin
+  # remote_user: pmolyavin
+   sudo: yes
+   vars:
+    time_zone: Europe/Moscow
+   tasks:
+       - include: roles/common/timezone.yml
+
