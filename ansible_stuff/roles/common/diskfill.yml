@@ -1,24 +1,30 @@
-- name: "Create partition table"
-  shell: parted -s {{ disk }}   mklabel msdos
-- name: "Register cylinder count"
-  shell: parted {{ disk }} unit cyl print | sed -n 's/.*: \([0-9]*\)cyl/\1/p'
-  register: cylinder_count
-- name: "Create partition"
-  shell: parted -a optimal {{ disk }} mkpart primary 8e 0cyl {{ cylinder_count }}cyl
-- name: "Set partition type" 
-  shell: parted {{ disk }} set 1 lvm on
-- name: "Sync /proc/partitions"
-  shell: partprobe > /dev/null 2>&1
-- name: "Extend Volume group"
-  shell: vgextend {{ vg_name }} {{ disk }}1
+#- name: "install parted"
+- name: "Extend VG"  
+  lvg: vg={{ vg_name }} pvs={{ disk }},/dev/vda2
+#- name: "Create partition table"
+#  shell: parted -s {{ disk }} mklabel msdos
+#- name: "Register cylinder count"
+#  shell: "parted {{ disk }} unit cyl print | sed -n 's/.*: \([0-9]*\)cyl/\1/p'"
+  #shell: parted {{ disk }} unit cyl print | grep {{ disk }} | cut -b 20- | cut -b-4 
+#  shell: echo {{ ansible_devices.vdb.size }} | cut -d . -f 1
+#3  register: part_size
+#- name: "Create partition"
+  #shell: parted -s -a optimal {{ disk }} unit GB mkpart primary 0 {{ part_size }}
+#  shell: echo -e "o\nn\np\n1\n\n\nw" | fdisk {{ disk }}
+#- name: "Set partition type" 
+#  shell: parted {{ disk }} set 1 lvm on
+#- name: "Sync /proc/partitions"
+#  shell: partprobe {{disk}} 
+#- name: "Extend Volume group"
+#  shell: vgextend {{ vg_name }} {{ disk }}1
 - name: "RAM size"
-  shell: free -m | grep Mem: | cut -b 15- | cut -b -5
+  shell: free -m | grep Mem | cut -b 15- | cut -b -5
   register: ram
 - name: "Calculate swap size"
-  shell: expr {{ ram }} \* 3 / 2
+  shell: expr {{ ansible_swaptotal_mb }} \* 3 / 2
   register: swap_size
 - name: "Extend LV swap"
-  shell: lvextend {{ vg_name }}/lv_swap -L {{ swap_size }}M
+  shell: lvextend {{ vg_name }}/lv_swap -L {{ swap_size.stdout }}M
 - name: "Swap off"
   shell: swapoff -a
 - name: "Creating new swap" 
@@ -28,5 +34,4 @@
 - name: 'Extend root volume'
   shell: lvextend -l +100%FREE {{ vg_name }}/lv_root
 - name: "Online resize"
-  shell: resize2fs {{ vg_name }}/lv_root
-
+  shell: resize2fs /dev/{{ vg_name }}/lv_root

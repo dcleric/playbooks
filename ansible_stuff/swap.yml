@@ -1,0 +1,10 @@
+- hosts: test
+  remote_user: superadmin
+  # remote_user: pmolyavin
+  sudo: yes
+  vars:
+    disk: /dev/vdb
+    vg_name: VolGroup
+  tasks:
+       - include: roles/common/swapfile.yml
+

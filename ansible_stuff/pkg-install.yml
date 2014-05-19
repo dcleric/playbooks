@@ -6,4 +6,5 @@
     disk: /dev/vdb
     vg_name: VolGroup
    tasks:
-       - include: roles/common/diskfill.yml
+       - include: roles/common/man.yml
+
