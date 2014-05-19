@@ -1,4 +1,4 @@
-# Ansible playbook for the KVM installation
+# Ansible playbook for the KVM installation (Debian)
      - name: Install qemu-kvm
        apt: name=qemu-kvm state=installed
        when: ansible_os_family == "Debian"
