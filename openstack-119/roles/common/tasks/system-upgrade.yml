@@ -1,0 +1,10 @@
+# System upgrade Independent
+ - name: Update of APT cache
+   apt: update_cache=yes
+   when: ansible_os_family == "Debian"
+ - name: Upgrade
+   apt: upgrade=yes force=yes
+   when: ansible_os_family == "Debian"
+ - name: Upgrade of the packages (CentOS)
+   yum: update=yes force=yes
+   when: ansible_os_family == "RedHat"
