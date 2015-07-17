@@ -1,0 +1,290 @@
+[DEFAULT]
+rpc_backend = rabbit
+auth_strategy = keystone
+core_plugin = ml2
+service_plugins = router
+allow_overlapping_ips = True
+
+[keystone_authtoken]
+auth_uri = http://{{ controller_name }}:5000
+auth_url = http://{{ controller_name }}:35357
+auth_plugin = password
+project_domain_id = default
+user_domain_id = default
+project_name = service
+username = neutron
+password = {{ neutron_password }}
+
+[oslo_concurrency]
+lock_path = $state_path/lock
+
+
+[oslo_messaging_rabbit]
+rabbit_host = {{ controller_name }}
+rabbit_userid = openstack
+rabbit_password = openstack
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[matchmaker_redis]
+
+
+
+
+
+
+[matchmaker_ring]
+
+
+
+[quotas]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[agent]
+
+
+
+
+
+
+
+
+[keystone_authtoken]
+auth_uri = http://kvm07:5000
+auth_url = http://kvm07:35357
+auth_plugin = password
+project_domain_id = default
+user_domain_id = default
+project_name = service
+username = neutron
+password = gbdjbdjlrf
+
+[database]
+
+
+
+
+
+
+
+
+
+
+
+
+[nova]
+
+
+
+
+
+
+
+
+[oslo_concurrency]
+
+lock_path = $state_path/lock
+
+
+[oslo_policy]
+
+
+
+
+[oslo_messaging_amqp]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[oslo_messaging_qpid]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[oslo_messaging_rabbit]
+rabbit_host = kvm07
+rabbit_userid = openstack
+rabbit_password = openstack
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

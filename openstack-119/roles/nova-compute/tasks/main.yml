@@ -3,3 +3,8 @@
 - include: ../../roles/common/tasks/generic-package-install.yml package=sysfsutils 
 - name: Copy of the configuration file nova.conf to the target
   template: src=../templates/nova_conf.j2 dst=/etc/nova/nova.conf mode=0644 owner=root backup=yes
+- name: Enable service nova-compute
+  service: name=openstack-nova-compute.service state=reloaded enable=yes
+- name: Enable service libvirt
+  service: name=libvirtd.service state=reloaded enable=yes
+

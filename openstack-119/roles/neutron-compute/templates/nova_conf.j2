@@ -1,11 +1,11 @@
 [DEFAULT]
 rpc_backend = rabbit
 auth_strategy = keystone
-my_ip = 172.16.105.121
+my_ip = {{ my_ip }}
 vnc_enabled = True
 vncserver_listen = 0.0.0.0
-vncserver_proxyclient_address = 172.16.105.121
-novncproxy_base_url = http://kvm07:6080/vnc_auto.html
+vncserver_proxyclient_address = {{ vncserver_proxy_cl }}
+novncproxy_base_url = http://{{ controller_name }}:6080/vnc_auto.html
 
 network_api_class = nova.network.neutronv2.api.API
 security_group_api = neutron
@@ -15,35 +15,6 @@ instance_usage_audit = True
 instance_usage_audit_period = hour
 notify_on_state_change = vm_and_task_state
 notification_driver = messagingv2
-
-[glance]
-host = {{ glance_ip }} kvm07
-
-[keystone_authtoken]
-auth_uri = http://{{ controller_name }}:5000
-auth_url = http://{{ controller_name }}:35357
-auth_plugin = password
-project_domain_id = default
-user_domain_id = default
-project_name = service
-username = nova
-password = {{ nova_password }}
-
-[neutron]
-url = http://{{ neutron_controller_name }}:9696
-auth_strategy = keystone
-admin_auth_url = http://{{ controller_name }}:35357/v2.0
-admin_tenant_name = service
-admin_username = neutron
-admin_password = {{ neutron_password }}
-
-[oslo_messaging_rabbit]
-rabbit_host = {{ controller_name }}
-rabbit_userid = openstack
-rabbit_password = openstack
-
-[oslo_concurrency]
-lock_path = /var/lib/nova/tmp
 
 
 

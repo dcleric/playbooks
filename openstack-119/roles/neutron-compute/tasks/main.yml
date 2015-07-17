@@ -1,0 +1,29 @@
+# Needed package install
+- include: ../../roles/common/tasks/generic-package-install.yml package=openstack-neutron
+- include: ../../roles/common/tasks/generic-package-install.yml package=openstack-neutron-ml2
+- include: ../../roles/common/tasks/generic-package-install.yml package=openstack-neutron-openvswitch
+- name: Copy of the configuration file neutron.conf to the target
+  template: src=../templates/neutron_conf.j2 dst=/etc/neutron/neutron.conf mode=0644 owner=root backup=yes
+- name: Apply net.ipv4.conf.all.rp_filter=0
+  sysctl: name=net.ipv4.conf.all.rp_filter value=0 state=present 
+- name: Apply net.ipv4.conf.default.rp_filter=0
+  sysctl: name=net.ipv4.conf.default.rp_filter value=0 state=present
+- name: Apply net.bridge.bridge-nf-call-iptables=1
+  sysctl: name=net.bridge.bridge-nf-call-iptables value=1 state=present
+- name: Apply net.bridge.bridge-nf-call-ip6tables=1
+  sysctl: name=net.bridge.bridge-nf-call-ip6tables value=1 state=present reload=yes
+
+
+
+
+
+
+
+
+
+
+- name: Enable service neutron-compute
+  service: name=openstack-nova-compute.service state=reloaded enable=yes
+- name: Enable service libvirt
+  service: name=libvirtd.service state=reloaded enable=yes
+
