@@ -1,0 +1,7 @@
+ - name: Installation of nova compute packages 
+   yum: name=openstack-nova-compute state=installed
+   when: ansible_os_family == "RedHat"
+ - name: Installation of optional sysfsutils 
+   yum: name=sysfsutils state=installed
+   when: ansible_os_family == "RedHat"
+

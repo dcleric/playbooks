@@ -1,0 +1,5 @@
+# Needed package install
+- include: ../../roles/common/tasks/generic-package-install.yml package=openstack-nova-compute
+- include: ../../roles/common/tasks/generic-package-install.yml package=sysfsutils 
+- name: Copy of the configuration file nova.conf to the target
+  template: src=../templates/nova_conf.j2 dst=/etc/nova/nova.conf mode=0644 owner=root backup=yes

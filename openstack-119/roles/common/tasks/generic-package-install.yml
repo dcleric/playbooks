@@ -1,0 +1,7 @@
+# Install a package to a system. Ensure you set {{ package }} variable in upper playbook.
+- name: "Ensure package {{ package }} is installed in Debian/Ubuntu"
+  apt: name={{ package }} cache_update=yes state=installed
+  when: ansible_os_family == "Debian"
+- name: "Ensure package {{ package }} is installed in RedHat"
+  yum: name={{ package }} state=installed
+  when: ansible_os_family == "RedHat"
