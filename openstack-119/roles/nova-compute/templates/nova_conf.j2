@@ -1,11 +1,11 @@
 [DEFAULT]
 rpc_backend = rabbit
 auth_strategy = keystone
-my_ip = 172.16.105.121
+my_ip = {{ my_mgmt_ip }}
 vnc_enabled = True
 vncserver_listen = 0.0.0.0
-vncserver_proxyclient_address = 172.16.105.121
-novncproxy_base_url = http://kvm07:6080/vnc_auto.html
+vncserver_proxyclient_address = {{ my_mgmt_ip }}
+novncproxy_base_url = http://{{ controller_name }}:6080/vnc_auto.html
 
 network_api_class = nova.network.neutronv2.api.API
 security_group_api = neutron
@@ -20,8 +20,8 @@ notification_driver = messagingv2
 host = {{ glance_ip }} kvm07
 
 [keystone_authtoken]
-auth_uri = http://{{ controller_name }}:5000
-auth_url = http://{{ controller_name }}:35357
+auth_uri = http://{{ keystone_server_name }}:5000
+auth_url = http://{{ keystone_server_name }}:35357
 auth_plugin = password
 project_domain_id = default
 user_domain_id = default
@@ -38,7 +38,7 @@ admin_username = neutron
 admin_password = {{ neutron_password }}
 
 [oslo_messaging_rabbit]
-rabbit_host = {{ controller_name }}
+rabbit_host = {{ rabbit_server_name }}
 rabbit_userid = openstack
 rabbit_password = openstack
 
