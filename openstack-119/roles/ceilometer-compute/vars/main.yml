@@ -1,6 +1,6 @@
 vars:
    rabbit_host: kvm07
-   rabbit_password: gbdjbdjlrf
+   rabbit_password: openstack
    ceilometer_db_password: gbdjbdjlrf
    mongo_db_host: kvm09
    keystone_server: kvm07

@@ -1,12 +1,14 @@
 [DEFAULT]
 verbose = False
 rpc_backend = rabbit
-rabbit_host = {{ rabbit_host }}
-rabbit_password = {{ rabbit_password }}
 auth_strategy = keystone
 
 [database]
 connection = mongodb://ceilometer:{{ ceilometer_db_password }}@{{ mongo_db_host }}:27017/ceilometer
+
+[oslo_messaging_rabbit]
+rabbit_host = {{ rabbit_host }}
+rabbit_password = {{ rabbit_password }}
 
 
 [keystone_authtoken]
