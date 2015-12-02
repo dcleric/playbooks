@@ -1,0 +1,13 @@
+ - name: Installation of openstack-ceilometer-common
+   yum: name=openstack-ceilometer-common state=installed
+   when: ansible_os_family == "RedHat"
+ - name: Installation of python-ceilometerclient
+   yum: name=python-ceilometerclient state=installed
+   when: ansible_os_family == "RedHat"
+ - name: Installation of python-ceilometer
+   yum: name=python-ceilometer state=installed
+   when: ansible_os_family == "RedHat"
+ - name: Installation of openstack-ceilometer-compute
+   yum: name=openstack-ceilometer-compute state=installed
+   when: ansible_os_family == "RedHat"
+

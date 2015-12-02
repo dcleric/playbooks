@@ -1,0 +1,2 @@
+- name: Enable the ceilometer-compute service
+  service: name=openstack-ceilometer enabled=yes state=started
